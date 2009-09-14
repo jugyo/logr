@@ -1,9 +1,13 @@
 get '/login' do
-  haml :login
+  unless logged_in?
+    haml :login
+  else
+    redirect '/'
+  end
 end
 
 post '/login' do
-  if params[:login] == options.login && params[:password] == options.password
+  if params[:login] == CONFIG["login"] && params[:password] == CONFIG["password"]
     session[:user] = params[:login]
     redirect '/'
   else
@@ -12,6 +16,7 @@ post '/login' do
 end
 
 get '/logout' do
+  login_required
   session.delete(:user)
   redirect '/'
 end

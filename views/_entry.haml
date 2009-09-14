@@ -1,0 +1,6 @@
+.entry
+  %h2
+    %a{:href => "/#{entry[:id]}"}
+      = entry[:title]
+  .entry_body= entry[:body]
+  .entry_status= entry[:updated_at]

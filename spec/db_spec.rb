@@ -16,14 +16,15 @@ describe 'db' do
 
   describe 'create entry' do
     before do
-      create_entries
+      create_entries(10)
+      @key = Entry << {:title => 'title title', :body => 'body body'}
     end
 
     it 'should create entry' do
-      key = Entry << {:title => 'title title', :body => 'body body'}
-      entry = Entry[key]
+      Entry.exists?(@key).should be_true
+      entry = Entry[@key]
       entry.should == {
-                        :key => key,
+                        :key => @key,
                         :title => 'title title',
                         :body => 'body body',
                         :updated_at => @now,
@@ -34,7 +35,7 @@ describe 'db' do
 
   describe 'update entry' do
     before do
-      create_entries
+      create_entries(10)
       @key = Entry << {:title => 'title title', :body => 'body body'}
     end
 
@@ -65,15 +66,14 @@ describe 'db' do
 
   describe 'delete entry' do
     before do
-      create_entries
+      create_entries(10)
       @key = Entry << {:title => 'title title', :body => 'body body'}
+      Entry.delete(@key)
     end
 
     it 'should delete entry' do
-      Entry.delete(@key)
+      Entry.exists?(@key).should be_false
       Entry[@key].should be_nil
-      keys = Entry.keys
-      keys.include?(@key).should be_false
     end
   end
 
@@ -86,13 +86,17 @@ describe 'db' do
 
     describe 'many entries' do
       before do
-        create_entries
+        create_entries(10)
       end
 
       it 'many keys' do
         Entry.keys.size.should == 10
         Entry[Entry.keys.first][:title].should == 'title_0'
         Entry[Entry.keys.last][:title].should == 'title_9'
+      end
+
+      it 'should return count' do
+        Entry.count.should == 10
       end
 
       describe 'create entry' do
@@ -118,8 +122,8 @@ describe 'db' do
     end
   end
 
-  def create_entries
-    10.times do |i|
+  def create_entries(count)
+    count.times do |i|
       Entry << {:title => "title_#{i}", :body => "body_#{i}"}
     end
   end

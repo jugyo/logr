@@ -37,23 +37,31 @@ class Entry
       nil
     end
 
+    def exists?(key)
+      keys.include?(key)
+    end
+
+    def count
+      keys.size
+    end
+
     def keys
-      entry_keys = KVS["entry_keys"]
+      entry_keys = KVS[:_entry_keys]
       unless entry_keys
         entry_keys = []
-        KVS["entry_keys"] = entry_keys
+        KVS[:_entry_keys] = entry_keys
       end
       entry_keys
     end
 
     def add_key(key)
-      KVS["entry_keys"] = keys << key
+      KVS[:_entry_keys] = keys << key
     end
 
     def delete_key(key)
       entry_keys = keys
       entry_keys.delete(key)
-      KVS["entry_keys"] = entry_keys
+      KVS[:_entry_keys] = entry_keys
     end
   end
 end

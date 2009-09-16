@@ -22,7 +22,13 @@ describe 'db' do
     it 'should create entry' do
       key = Entry << {:title => 'title title', :body => 'body body'}
       entry = Entry[key]
-      entry.should == {:title => 'title title', :body => 'body body', :updated_at => @now, :created_at => @now}
+      entry.should == {
+                        :key => key,
+                        :title => 'title title',
+                        :body => 'body body',
+                        :updated_at => @now,
+                        :created_at => @now
+                      }
     end
   end
 
@@ -34,14 +40,26 @@ describe 'db' do
 
     it 'should update entry' do
       entry = Entry[@key]
-      entry.should == {:title => 'title title', :body => 'body body', :updated_at => @now, :created_at => @now}
+      entry.should == {
+                        :key => @key,
+                        :title => 'title title',
+                        :body => 'body body',
+                        :updated_at => @now,
+                        :created_at => @now
+                      }
 
       fake_updated_at = Time.local(2009, 9, 16)
       Time.should_receive(:now).and_return(fake_updated_at)
 
       Entry[@key] = entry.merge({:title => 'TITLE!!', :body => 'BODY!!'})
       updated_entry = Entry[@key]
-      updated_entry.should == {:title => 'TITLE!!', :body => 'BODY!!', :updated_at => fake_updated_at, :created_at => @now}
+      updated_entry.should == {
+                                :key => @key,
+                                :title => 'TITLE!!',
+                                :body => 'BODY!!',
+                                :updated_at => fake_updated_at,
+                                :created_at => @now
+                              }
     end
   end
 

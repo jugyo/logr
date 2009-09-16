@@ -1,7 +1,9 @@
 require 'rubygems'
 require 'kvs'
+require 'fileutils'
 
 KVS.dir = File.dirname(__FILE__) + '/../db'
+FileUtils.mkdir_p(KVS.dir)
 
 class Entry
   class <<self
@@ -15,7 +17,12 @@ class Entry
 
     # read
     def [](key)
-      KVS[key]
+      value = KVS[key]
+      if value
+        value.merge({:key => key})
+      else
+        nil
+      end
     end
 
     # update

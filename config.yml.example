@@ -1,2 +1,10 @@
-login: test
-password: testtest
+user:
+  login: test
+  password: testtest
+
+session:
+  key: '_logr_session'
+  secret: '40c58459b990a022257f165381c9d55670a19473'
+  expire_after: 3600
+
+par_page: 10

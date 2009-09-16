@@ -1,0 +1,6 @@
+.pagination
+  - page_count = (Entry.count / CONFIG["par_page"]) + 1
+  - if page > 0
+    %a{:href => "/page/#{page - 1}"} &lt; Newer
+  - if page < (page_count - 1)
+    %a{:href => "/page/#{page + 1}"} Older &gt;

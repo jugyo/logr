@@ -1,0 +1,11 @@
+#header
+  %h1
+    %a{:href => '/'} Logr
+
+- if logged_in?
+  %a{:href => '/entries/new'} new
+
+#contents
+  = yield
+
+#footer

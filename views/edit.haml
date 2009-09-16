@@ -1,0 +1,2 @@
+%form{:action => "/entries/#{@entry[:key]}/update", :method => 'post'}
+  = partial :form, :locals => {:entry => @entry}

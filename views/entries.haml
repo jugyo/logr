@@ -1,2 +1,4 @@
 - @entries.each do |entry|
   = partial :entry, :locals => {:entry => entry}
+
+= partial :entry_pagination, :locals => {:page => @page}

@@ -7,7 +7,7 @@ get '/login' do
 end
 
 post '/login' do
-  if params[:login] == CONFIG["login"] && params[:password] == CONFIG["password"]
+  if params[:login] == CONFIG["user"]["login"] && params[:password] == CONFIG["user"]["password"]
     session[:user] = params[:login]
     redirect '/'
   else

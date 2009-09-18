@@ -1,2 +1,5 @@
 %form{:action => '/entries/create', :method => 'post'}
   = partial :form, :locals => {:entry => @entry}
+  %div
+    %input{:type => 'submit', :value => 'Post'}
+    %a{:href => "javascript:history.back()"} Cancel

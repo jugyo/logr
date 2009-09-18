@@ -1,2 +1,8 @@
 %form{:action => "/entries/#{@entry[:key]}/update", :method => 'post'}
   = partial :form, :locals => {:entry => @entry}
+  %div
+    %input{:type => 'submit', :value => 'Update'}
+    %a{:href => "javascript:history.back()"} Cancel
+
+%div
+  %a{:href => "/entries/#{@entry[:key]}/delete", :onclick => "return confirm('Are you sure?');"} delete

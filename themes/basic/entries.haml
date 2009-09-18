@@ -1,4 +1,38 @@
-- @entries.each do |entry|
-  = partial :entry, :locals => {:entry => entry}
+- if logged_in?
+  %a.new-entry-link{:href => '#'} new
+
+#entries
+  #new-entry-insert-point
+  - @entries.each do |entry|
+    = partial :entry, :locals => {:entry => entry}
 
 = partial :entry_pagination, :locals => {:page => @page}
+
+#new-entry-modal-content
+  %div
+    %textarea{:id => 'new-entry-body', :name => :body, :rows => 30}
+  %div
+    %button{:id => 'new-entry-submit'} Post
+
+:javascript
+  $(document).ready(function () {
+    $('.new-entry-link').click(function(e) {
+      e.preventDefault();
+      $('#new-entry-modal-content').modal();
+    });
+
+    $('#new-entry-submit').click(function (e) {
+      this.disabled = true;
+      $.ajax({
+        type: 'POST',
+        url: '/entries/create',
+        data: 'body=' + $('#new-entry-body').val(),
+        success: function(msg){
+          $('#new-entry-insert-point').after(msg);
+        },
+        complete: function() {
+          $.modal.close();
+        }
+      });
+    });
+  });

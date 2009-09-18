@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require 'sinatra'
+require 'json'
 require 'fileutils'
 
 # config
@@ -38,7 +39,11 @@ end
 post '/entries/create' do
   login_required
   key = Entry << params.symbolize_keys
-  redirect "/entries/#{key}"
+  if request.xhr?
+    partial :entry, :locals => {:entry => Entry[key]}
+  else
+    redirect "/entries/#{key}"
+  end
 end
 
 get '/entries/:key/edit' do

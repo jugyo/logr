@@ -3,7 +3,8 @@
   %meta{:"http-equiv"=>"Content-Type", :content=>"text/html;charset=UTF-8"}
   %title= CONFIG["title"]
   %link{:rel=>'stylesheet', :type=>'text/css', :href=>'/css', :media=>'screen,tv,projection'}
-  %script{:type=>"text/javascript", :src=>"/jquery.js"}
+  %script{:type=>"text/javascript", :src=>"/js/jquery.js"}
+  %script{:type=>"text/javascript", :src=>"/js/jquery.simplemodal.js"}
 
 %html
   %body
@@ -11,9 +12,6 @@
       #header
         %h1
           %a{:href => '/'} Logr
-
-      - if logged_in?
-        %a{:href => '/entries/new'} new
 
       #contents
         = yield

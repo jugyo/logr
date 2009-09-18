@@ -1,6 +1,6 @@
 .entry
   %h2
-    - unless entry[:title].empty?
+    - if entry[:title] && !entry[:title].empty?
       %a{:href => "/entries/#{entry[:key]}"}= entry[:title]
     - else
       %a{:href => "/entries/#{entry[:key]}"}= entry[:key][0..8] + '...'

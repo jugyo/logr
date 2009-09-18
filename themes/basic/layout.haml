@@ -1,11 +1,21 @@
-#header
-  %h1
-    %a{:href => '/'} Logr
+!!! 1.1
+%head
+  %meta{:"http-equiv"=>"Content-Type", :content=>"text/html;charset=UTF-8"}
+  %title= CONFIG["title"]
+  %link{:rel=>'stylesheet', :type=>'text/css', :href=>'/css', :media=>'screen,tv,projection'}
+  %script{:type=>"text/javascript", :src=>"/jquery.js"}
 
-- if logged_in?
-  %a{:href => '/entries/new'} new
+%html
+  %body
+    #wrap
+      #header
+        %h1
+          %a{:href => '/'} Logr
 
-#contents
-  = yield
+      - if logged_in?
+        %a{:href => '/entries/new'} new
 
-#footer
+      #contents
+        = yield
+
+      #footer

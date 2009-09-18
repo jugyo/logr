@@ -1,8 +1,12 @@
 .entry
   %h2
-    %a{:href => "/entries/#{entry[:key]}"}
-      = entry[:title]
+    - unless entry[:title].empty?
+      %a{:href => "/entries/#{entry[:key]}"}= entry[:title]
+    - else
+      %a{:href => "/entries/#{entry[:key]}"}= entry[:key][0..8] + '...'
+
   .entry_body= entry[:body]
+
   .entry_status= entry[:updated_at]
   - if logged_in?
     .entry_actions

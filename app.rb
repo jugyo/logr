@@ -18,6 +18,11 @@ Dir['lib/*'].each { |file| load file }
 
 # routing
 
+get '/css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :css
+end
+
 get '/' do
   @page = 0
   @entries = Entry.keys.reverse[0...CONFIG["par_page"]].map { |key| Entry[key] }

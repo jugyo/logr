@@ -3,12 +3,20 @@ require 'rubygems'
 require 'sinatra'
 require 'fileutils'
 
-CONFIG = YAML.load_file('config.yml')
+# config
+
+BASE_DIR = File.dirname(__FILE__)
+CONFIG = YAML.load_file(BASE_DIR + '/config.yml')
+set :views, BASE_DIR + '/themes/' + CONFIG["theme"]
 set :sessions, true
 use Rack::Session::Cookie, CONFIG["session"]
 
-$:.unshift(File.dirname(__FILE__))
+# load libs
+
+$:.unshift(BASE_DIR)
 Dir['lib/*'].each { |file| load file }
+
+# routing
 
 get '/' do
   @page = 0
